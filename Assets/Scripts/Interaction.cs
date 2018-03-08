@@ -4,8 +4,10 @@ using UnityEngine;
 
 [System.Serializable]
 
-public class Interaction : MonoBehaviour {
+public class Interaction {
 	public enum InteractionType {Paragraph, Question, Line, Picture};
 	public InteractionType type;
 	public Question question;
+	public string text;
+	public string tag;
 }

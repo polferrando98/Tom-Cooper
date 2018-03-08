@@ -31,7 +31,7 @@ public class DataController : MonoBehaviour
 
 	//Create an Ienumerable list. Will be used to store XML Items.
 
-	List <XMLData> data = new List <XMLData> ();
+	public Chapter chapter_1;
 	//Initialize List of XMLData objects.
 
 	bool finishedLoading = false;
@@ -40,6 +40,8 @@ public class DataController : MonoBehaviour
 	void Start ()
 	{
 		DontDestroyOnLoad (gameObject);
+
+		chapter_1 = new Chapter ();
 
 		//Allows Loader to carry over into new scene 
 		LoadXML (); //Loads XML File. Code below. 
@@ -50,6 +52,7 @@ public class DataController : MonoBehaviour
 	{
 		
 		if (finishedLoading) {
+			chapter_1.Awake ();
 			SceneManager.LoadScene ("MenuScreen"); //Only happens if coroutine is finished 
 			finishedLoading = false;
 		}
@@ -70,55 +73,40 @@ public class DataController : MonoBehaviour
 	IEnumerator AssignData () {
 		
 		/*foreach allows us to look at every Element of our XML file and do something with each one. Basically, this line is saying “for each element in the xml document, do something.*/ 
-		foreach (var chapter in chapters) {
-			interactions = chapter.Descendants ("interaction");
+		foreach (var chapter_node in chapters) {
+			interactions = chapter_node.Descendants ("interaction");
+			List<Interaction> interactions_list = new List<Interaction>();
+			//Debug.Log (chapter);
 
-			foreach (var interaction in interactions) {
+			foreach (var interaction_node in interactions) {
 				
+				Interaction interaction = new Interaction ();
+
+				interaction.tag = interaction_node.Attribute ("tag").Value;
+
+				if (interaction_node.Attribute("type").Value == "paragraph")
+				{
+					interaction.type = Interaction.InteractionType.Paragraph;
+
+					IEnumerable<XElement> interaction_childs = interaction_node.Descendants ();
+
+					foreach (var descendant in interaction_childs) {
+						if (descendant.Name == ("text")) {
+							interaction.text = descendant.Value;
+						}
+					}
+
+					
+				}
+
+				interactions_list.Add (interaction);
+					
 			}
 
-			/*Determine if the <page number> attribute in the XML is equal to whatever our current iteration of the loop is. If it is, then we want to assign our variables to the value of the XML Element that we need.
-
-			if (item.Parent.Attribute(("number")).Value == iteration.ToString ()) {
-
-				pageNum = int.Parse (item.Parent.Attribute ("number").Value);
-				charText = item.Parent.Element ("name").Value.Trim ();
-				dialogueText = item.Parent.Element ("dialogue").Value.Trim ();
-
-				/*Create a new Index in the List, which will be a new XMLData object and pass the previously assigned variables as arguments so they get assigned to the new object’s variables.
-				data.Add (new XMLData (pageNum, charText, dialogueText));
-
-				/*To test and make sure the data has been applied to properly, print out the musicClip name from the data list’s current index. This will let us know if the objects in the list have been created successfully and if their variables have been assigned the right values.
-
-				Debug.Log (data [iteration].dialogueText);
-
-				iteration++; //increment the iteration by 1
-
-			}
-
-			*/
+			chapter_1.interaction_list = interactions_list;
 		}
 
 		finishedLoading = true; //tell the program that we’ve finished loading data. 
 		yield return null;
 	}
-}
-
-
-
-
-// This class is used to assign our XML Data to objects in a list so we can call on them later.
-
-public class XMLData
-{
-	//TODO
-
-	// Create a constructor that will accept multiple arguments that can be assigned to our variables.
-	public XMLData (int page, string character, string dialogue)
-	{
-
-		//TODO
-
-	}
-
 }
