@@ -11,4 +11,5 @@ public class Interaction {
 	public string text;
 	public string tag;
 	public string next;
+	public string pic;
 }

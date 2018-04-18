@@ -95,11 +95,12 @@ public class DataController : MonoBehaviour
 							interaction.text = descendant.Value.ToString();
 						}
 						if (descendant.Name == ("next")) {
-							interaction.next = descendant.Value.ToString();
+							interaction.next = descendant.Value.Replace ("\r", "").Replace ("\n", "").Replace ("\t", "");
+						}
+						if (descendant.Name == ("pic")) {
+							interaction.pic = descendant.Value.Replace ("\r", "").Replace ("\n", "").Replace ("\t", "");
 						}
 					}
-
-					
 				}
 
 				interactions_list.Add (interaction);

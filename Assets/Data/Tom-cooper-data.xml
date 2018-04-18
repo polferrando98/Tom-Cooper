@@ -5,7 +5,12 @@
 		<text> 
 			Tom Cooper, a frustrated travel writer with a bad drinking habit, is on a flight to Moscow to meet an old friend from university. He had failed in love – his wife divorced him – and he had failed as a writer – he was never able to replicate the success of his first and only book – so he had decided to give up everything and hit the road in search of inspiration, and crossing Russia by motorbike sounded like a good plan at the moment.
 		</text>
-		<next>plane_1</next>
+		<next>
+			plane_1
+		</next>
+		<pic>
+			Plane
+		</pic>
 	</interaction>
 	<interaction tag="plane_1" type="paragraph">
 		<text> 
