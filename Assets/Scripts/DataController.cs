@@ -92,7 +92,10 @@ public class DataController : MonoBehaviour
 
 					foreach (var descendant in interaction_childs) {
 						if (descendant.Name == ("text")) {
-							interaction.text = descendant.Value;
+							interaction.text = descendant.Value.ToString();
+						}
+						if (descendant.Name == ("next")) {
+							interaction.next = descendant.Value.ToString();
 						}
 					}
 

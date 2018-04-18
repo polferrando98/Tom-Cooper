@@ -10,4 +10,5 @@ public class Interaction {
 	public Question question;
 	public string text;
 	public string tag;
+	public string next;
 }
