@@ -95,10 +95,26 @@ public class DataController : MonoBehaviour
 							interaction.text = descendant.Value.ToString();
 						}
 						if (descendant.Name == ("next")) {
-							interaction.next = descendant.Value.Replace ("\r", "").Replace ("\n", "").Replace ("\t", "");
+							interaction.next = descendant.Value.Replace ("\r", "").Replace ("\n", "").Replace ("\t", "").Replace(" ", ""); ;
 						}
 						if (descendant.Name == ("pic")) {
-							interaction.pic = descendant.Value.Replace ("\r", "").Replace ("\n", "").Replace ("\t", "");
+							interaction.pic = descendant.Value.Replace ("\r", "").Replace ("\n", "").Replace ("\t", "").Replace(" ", "");
+						}
+					}
+				}
+
+				if (interaction_node.Attribute("type").Value == "fullscreen_pic")
+				{
+					interaction.type = Interaction.InteractionType.FullscreenPicture;
+
+					IEnumerable<XElement> interaction_childs = interaction_node.Descendants ();
+
+					foreach (var descendant in interaction_childs) {
+						if (descendant.Name == ("next")) {
+							interaction.next = descendant.Value.Replace ("\r", "").Replace ("\n", "").Replace ("\t", "").Replace(" ", ""); ;
+						}
+						if (descendant.Name == ("pic")) {
+							interaction.pic = descendant.Value.Replace ("\r", "").Replace ("\n", "").Replace ("\t", "").Replace(" ", "");
 						}
 					}
 				}

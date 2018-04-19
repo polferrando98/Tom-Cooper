@@ -1,7 +1,16 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
 <chapter>
-	<interaction tag="firstText" type="paragraph">
+	<interaction tag="intro_pic_plane" type="fullscreen_pic">
+		<pic>
+			plane
+		</pic>
+		<next>
+			first_text
+		</next>
+	</interaction>
+  
+	<interaction tag="first_text" type="paragraph">
 		<text> 
 			Tom Cooper, a frustrated travel writer with a bad drinking habit, is on a flight to Moscow to meet an old friend from university. He had failed in love – his wife divorced him – and he had failed as a writer – he was never able to replicate the success of his first and only book – so he had decided to give up everything and hit the road in search of inspiration, and crossing Russia by motorbike sounded like a good plan at the moment.
 		</text>
@@ -9,23 +18,38 @@
 			plane_1
 		</next>
 		<pic>
-			Plane
-		</pic>
+      plane_inside_1
+    </pic>
 	</interaction>
+  
 	<interaction tag="plane_1" type="paragraph">
 		<text> 
 			Ugh… that was a rough flight…
 		</text>
+    <pic>
+      plane_window
+    </pic>
 		<next>
 			plane_2
 		</next>
 	</interaction>
-	<interaction tag="plane_2" type="paragraph">
-		<text> 
-			Example text
-		</text>
-		<next>
-			plane_3
-		</next>
+  
+	<interaction tag="plane_2" type="fullscreen_pic">
+    <pic>
+      finger_on_button
+    </pic>
+    <next>
+      plane_3
+    </next>
 	</interaction>
+
+  <interaction tag="plane_3" type="fullscreen_pic">
+    <pic>
+      attendant
+    </pic>
+    <next>
+      first_text
+    </next>
+  </interaction>
+  
 </chapter>

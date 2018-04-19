@@ -5,7 +5,7 @@ using UnityEngine;
 [System.Serializable]
 
 public class Interaction {
-	public enum InteractionType {Paragraph, Question, Line, Picture};
+	public enum InteractionType {Paragraph, Question, Line, FullscreenPicture};
 	public InteractionType type;
 	public Question question;
 	public string text;
