@@ -12,11 +12,17 @@ public class GameController : MonoBehaviour
 
 
     public GameObject ParagraphPanel;
-    public Text text_box;
+    public Text paragraph_text_box;
     public Image paragraph_image;
 
     public GameObject FullscreenPicPanel;
     public Image fullscreen_image;
+
+    public GameObject QuestionPanel;
+    public Text question_text_box;
+    public Button opt1;
+    public Button opt2;
+    public Image question_image;
 
     DataController data;
     List<Chapter> chapter_list = new List<Chapter>();
@@ -28,7 +34,7 @@ public class GameController : MonoBehaviour
     void Start()
     {
         data = (DataController)FindObjectOfType(typeof(DataController));
-        text_box.text = "Error loading interactions";
+        paragraph_text_box.text = "Error loading interactions";
 
         foreach (Interaction interaction in data.chapter_1.interaction_list)
         {
@@ -62,8 +68,19 @@ public class GameController : MonoBehaviour
                 break;
             case Interaction.InteractionType.Paragraph:
                 ParagraphPanel.SetActive(true);
-                text_box.text = current_interaction.text;
+                paragraph_text_box.text = current_interaction.text;
                 paragraph_image.overrideSprite = Resources.Load<Sprite>(current_interaction.pic);
+                break;
+            case Interaction.InteractionType.Question:
+                QuestionPanel.SetActive(true);
+                question_text_box.text = current_interaction.question.questionText;
+                opt1.GetComponentInChildren<Text>().text = current_interaction.question.answers[0].text;
+                opt2.GetComponentInChildren<Text>().text = current_interaction.question.answers[1].text;
+                question_image.overrideSprite = Resources.Load<Sprite>(current_interaction.pic);
+
+                //Calls the Opt1OnClick method when you click the Button
+                opt1.onClick.AddListener(OnOpt1Click);
+                opt2.onClick.AddListener(OnOpt2Click);
                 break;
         }
     }
@@ -87,5 +104,34 @@ public class GameController : MonoBehaviour
     {
         ParagraphPanel.SetActive(false);
         FullscreenPicPanel.SetActive(false);
+        QuestionPanel.SetActive(false);
+    }
+
+    public void OnOpt1Click()
+    {
+        foreach (var interaction in data.chapter_1.interaction_list)
+        {
+            if (interaction.tag == current_interaction.question.answers[0].next)
+            {
+                current_interaction = interaction;
+                break;
+            }
+        }
+
+        LoadCurrentInteraction();
+    }
+
+    public void OnOpt2Click()
+    {
+        foreach (var interaction in data.chapter_1.interaction_list)
+        {
+            if (interaction.tag == current_interaction.question.answers[1].next)
+            {
+                current_interaction = interaction;
+                break;
+            }
+        }
+
+        LoadCurrentInteraction();
     }
 }

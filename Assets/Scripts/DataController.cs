@@ -13,120 +13,162 @@ using System.Xml.Serialization;
 using System.IO;
 using System.Xml.Linq;
 
- //Needed for XDocument
+//Needed for XDocument
 
 
 public class DataController : MonoBehaviour
 {
-	public Interaction[] all_interactions_data;
+    public Interaction[] all_interactions_data;
 
-	XDocument xmlDoc;
-	//create Xdocument. Will be used later to read XML file
+    XDocument xmlDoc;
+    //create Xdocument. Will be used later to read XML file
 
-	IEnumerable<XElement> chapters;
+    IEnumerable<XElement> chapters;
 
-	IEnumerable<XElement> interactions;
+    IEnumerable<XElement> interactions;
 
-	XElement text;
+    //Create an Ienumerable list. Will be used to store XML Items.
 
-	//Create an Ienumerable list. Will be used to store XML Items.
+    public Chapter chapter_1;
+    //Initialize List of XMLData objects.
 
-	public Chapter chapter_1;
-	//Initialize List of XMLData objects.
+    bool finishedLoading = false;
 
-	bool finishedLoading = false;
+    // Use this for initialization
+    void Start()
+    {
+        DontDestroyOnLoad(gameObject);
 
-	// Use this for initialization
-	void Start ()
-	{
-		DontDestroyOnLoad (gameObject);
+        chapter_1 = new Chapter();
 
-		chapter_1 = new Chapter ();
+        //Allows Loader to carry over into new scene 
+        LoadXML(); //Loads XML File. Code below. 
+        StartCoroutine("AssignData"); //Starts assigning XML data to data List. Code below
+    }
 
-		//Allows Loader to carry over into new scene 
-		LoadXML (); //Loads XML File. Code below. 
-		StartCoroutine ("AssignData"); //Starts assigning XML data to data List. Code below
-	}
+    void Update()
+    {
 
-	void Update ()
-	{
-		
-		if (finishedLoading) {
-			chapter_1.Awake ();
-			SceneManager.LoadScene ("MenuScreen"); //Only happens if coroutine is finished 
-			finishedLoading = false;
-		}
+        if (finishedLoading)
+        {
+            chapter_1.Awake();
+            SceneManager.LoadScene("MenuScreen"); //Only happens if coroutine is finished 
+            finishedLoading = false;
+        }
 
-	}
+    }
 
-	void LoadXML ()
-	{
-		//Assigning Xdocument xmlDoc. Loads the xml file from the file path listed. 
-		xmlDoc = XDocument.Load ("Assets/Data/Tom-cooper-data.xml");
+    void LoadXML()
+    {
+        //Assigning Xdocument xmlDoc. Loads the xml file from the file path listed. 
+        xmlDoc = XDocument.Load("Assets/Data/Tom-cooper-data.xml");
 
-		//This basically breaks down the XML Document into XML Elements. Used later. 
-		chapters = xmlDoc.Descendants("chapter");
-	}
+        //This basically breaks down the XML Document into XML Elements. Used later. 
+        chapters = xmlDoc.Descendants("chapter");
+    }
 
 
-	//this is our coroutine that will actually read and assign the XML data to our List
-	IEnumerator AssignData () {
-		
-		/*foreach allows us to look at every Element of our XML file and do something with each one. Basically, this line is saying “for each element in the xml document, do something.*/ 
-		foreach (var chapter_node in chapters) {
-			interactions = chapter_node.Descendants ("interaction");
-			List<Interaction> interactions_list = new List<Interaction>();
-			//Debug.Log (chapter);
+    //this is our coroutine that will actually read and assign the XML data to our List
+    IEnumerator AssignData()
+    {
 
-			foreach (var interaction_node in interactions) {
-				
-				Interaction interaction = new Interaction ();
+        /*foreach allows us to look at every Element of our XML file and do something with each one. Basically, this line is saying “for each element in the xml document, do something.*/
+        foreach (var chapter_node in chapters)
+        {
+            interactions = chapter_node.Descendants("interaction");
+            List<Interaction> interactions_list = new List<Interaction>();
+            //Debug.Log (chapter);
 
-				interaction.tag = interaction_node.Attribute ("tag").Value;
+            foreach (var interaction_node in interactions)
+            {
 
-				if (interaction_node.Attribute("type").Value == "paragraph")
-				{
-					interaction.type = Interaction.InteractionType.Paragraph;
+                Interaction interaction = new Interaction();
 
-					IEnumerable<XElement> interaction_childs = interaction_node.Descendants ();
+                interaction.tag = interaction_node.Attribute("tag").Value;
 
-					foreach (var descendant in interaction_childs) {
-						if (descendant.Name == ("text")) {
-							interaction.text = descendant.Value.ToString();
-						}
-						if (descendant.Name == ("next")) {
-							interaction.next = descendant.Value.Replace ("\r", "").Replace ("\n", "").Replace ("\t", "").Replace(" ", ""); ;
-						}
-						if (descendant.Name == ("pic")) {
-							interaction.pic = descendant.Value.Replace ("\r", "").Replace ("\n", "").Replace ("\t", "").Replace(" ", "");
-						}
-					}
-				}
+                if (interaction_node.Attribute("type").Value == "paragraph")
+                {
+                    interaction.type = Interaction.InteractionType.Paragraph;
 
-				if (interaction_node.Attribute("type").Value == "fullscreen_pic")
-				{
-					interaction.type = Interaction.InteractionType.FullscreenPicture;
+                    IEnumerable<XElement> interaction_childs = interaction_node.Descendants();
 
-					IEnumerable<XElement> interaction_childs = interaction_node.Descendants ();
+                    foreach (var descendant in interaction_childs)
+                    {
+                        if (descendant.Name == ("text"))
+                        {
+                            interaction.text = descendant.Value.ToString();
+                        }
+                        if (descendant.Name == ("next"))
+                        {
+                            interaction.next = descendant.Value.Replace("\r", "").Replace("\n", "").Replace("\t", "").Replace(" ", ""); ;
+                        }
+                        if (descendant.Name == ("pic"))
+                        {
+                            interaction.pic = descendant.Value.Replace("\r", "").Replace("\n", "").Replace("\t", "").Replace(" ", "");
+                        }
+                    }
+                }
 
-					foreach (var descendant in interaction_childs) {
-						if (descendant.Name == ("next")) {
-							interaction.next = descendant.Value.Replace ("\r", "").Replace ("\n", "").Replace ("\t", "").Replace(" ", ""); ;
-						}
-						if (descendant.Name == ("pic")) {
-							interaction.pic = descendant.Value.Replace ("\r", "").Replace ("\n", "").Replace ("\t", "").Replace(" ", "");
-						}
-					}
-				}
+                if (interaction_node.Attribute("type").Value == "fullscreen_pic")
+                {
+                    interaction.type = Interaction.InteractionType.FullscreenPicture;
 
-				interactions_list.Add (interaction);
-					
-			}
+                    IEnumerable<XElement> interaction_childs = interaction_node.Descendants();
 
-			chapter_1.interaction_list = interactions_list;
-		}
+                    foreach (var descendant in interaction_childs)
+                    {
+                        if (descendant.Name == ("next"))
+                        {
+                            interaction.next = descendant.Value.Replace("\r", "").Replace("\n", "").Replace("\t", "").Replace(" ", ""); ;
+                        }
+                        if (descendant.Name == ("pic"))
+                        {
+                            interaction.pic = descendant.Value.Replace("\r", "").Replace("\n", "").Replace("\t", "").Replace(" ", "");
+                        }
+                    }
+                }
 
-		finishedLoading = true; //tell the program that we’ve finished loading data. 
-		yield return null;
-	}
+                if (interaction_node.Attribute("type").Value == "question")
+                {
+                    interaction.type = Interaction.InteractionType.Question;
+                    interaction.question = new Question();
+                    interaction.question.answers = new List<Answer>();
+
+                    IEnumerable<XElement> interaction_childs = interaction_node.Descendants();
+
+                    foreach (var descendant in interaction_childs)
+                    {
+                        if (descendant.Name == ("pic"))
+                        {
+                            interaction.pic = descendant.Value.Replace("\r", "").Replace("\n", "").Replace("\t", "").Replace(" ", "");
+                        }
+                        if (descendant.Name == ("question"))
+                        {
+
+                            IEnumerable<XElement> question_nodes = descendant.Descendants();
+                            foreach (var question_child in question_nodes)
+                            {
+                                if (question_child.Name == ("question_text"))
+                                {
+                                    interaction.question.questionText = question_child.Value.ToString();
+                                }
+                                if (question_child.Name == ("answer"))
+                                {
+                                    interaction.question.answers.Add(new Answer(question_child.Value, question_child.Attribute("next").Value));
+                                }
+                            }
+                        }
+                    }
+                }
+
+                interactions_list.Add(interaction);
+
+                chapter_1.interaction_list = interactions_list;
+            }
+
+            finishedLoading = true; //tell the program that we’ve finished loading data. 
+            yield return null;
+        }
+    }
+
 }
