@@ -64,19 +64,24 @@ public class GameController : MonoBehaviour
         {
             case Interaction.InteractionType.FullscreenPicture:
                 FullscreenPicPanel.SetActive(true);
-                fullscreen_image.overrideSprite = Resources.Load<Sprite>(current_interaction.pic);
+                fullscreen_image.overrideSprite = GetSpriteFromFileName(current_interaction.pic);
                 break;
             case Interaction.InteractionType.Paragraph:
                 ParagraphPanel.SetActive(true);
                 paragraph_text_box.text = current_interaction.text;
-                paragraph_image.overrideSprite = Resources.Load<Sprite>(current_interaction.pic);
+
+
+                //paragraph_image.overrideSprite = Resources.Load<Sprite>(current_interaction.pic);
+                paragraph_image.overrideSprite = GetSpriteFromFileName(current_interaction.pic);
+
                 break;
             case Interaction.InteractionType.Question:
                 QuestionPanel.SetActive(true);
                 question_text_box.text = current_interaction.question.questionText;
                 opt1.GetComponentInChildren<Text>().text = current_interaction.question.answers[0].text;
                 opt2.GetComponentInChildren<Text>().text = current_interaction.question.answers[1].text;
-                question_image.overrideSprite = Resources.Load<Sprite>(current_interaction.pic);
+
+                question_image.overrideSprite = GetSpriteFromFileName(current_interaction.pic);
 
                 //Calls the Opt1OnClick method when you click the Button
                 opt1.onClick.AddListener(OnOpt1Click);
@@ -133,5 +138,23 @@ public class GameController : MonoBehaviour
         }
 
         LoadCurrentInteraction();
+    }
+
+    public Sprite GetSpriteFromFileName(string name)
+    {
+        byte[] imgData;
+        Texture2D tex = new Texture2D(2, 2);
+
+        string path = Application.streamingAssetsPath + "/Images/" + name + ".jpg";
+
+        imgData = File.ReadAllBytes(path);
+
+        tex.LoadImage(imgData);
+
+        Vector2 pivot = new Vector2(0.5f, 0.5f);
+
+        Sprite sprite = Sprite.Create(tex, new Rect(0.0f, 0.0f, tex.width, tex.height), pivot, 100.0f);
+
+        return sprite;
     }
 }

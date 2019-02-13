@@ -63,20 +63,24 @@ public class DataController : MonoBehaviour
 
     void LoadXML()
     {
-        string path = Application.dataPath + "/Tom-cooper-data.xml";
-        myText = (TextAsset)AssetDatabase.LoadAssetAtPath(path, typeof(TextAsset));
+        // #if UNITY_STANDALONE && !UNITY_EDITOR
+        string path = Application.streamingAssetsPath + "/Tom-cooper-data.xml";
+        //myText = (TextAsset)AssetDatabase.LoadAssetAtPath(path, typeof(TextAsset));
 
         //Assigning Xdocument xmlDoc. Loads the xml file from the file path listed. 
-        xmlDoc = XDocument.Parse(myText.text);
+        xmlDoc = XDocument.Load(path);
 
         //This basically breaks down the XML Document into XML Elements. Used later. 
         chapters = xmlDoc.Descendants("chapter");
+        //#endif
     }
 
 
     //this is our coroutine that will actually read and assign the XML data to our List
     IEnumerator AssignData()
     {
+        if (chapters == null)
+            yield break;
 
         /*foreach allows us to look at every Element of our XML file and do something with each one. Basically, this line is saying “for each element in the xml document, do something.*/
         foreach (var chapter_node in chapters)
