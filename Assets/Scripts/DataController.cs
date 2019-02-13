@@ -13,6 +13,8 @@ using System.Xml.Serialization;
 using System.IO;
 using System.Xml.Linq;
 
+using UnityEditor;
+
 //Needed for XDocument
 
 
@@ -20,6 +22,7 @@ public class DataController : MonoBehaviour
 {
     public Interaction[] all_interactions_data;
 
+    TextAsset myText;
     XDocument xmlDoc;
     //create Xdocument. Will be used later to read XML file
 
@@ -60,8 +63,11 @@ public class DataController : MonoBehaviour
 
     void LoadXML()
     {
+        string path = Application.dataPath + "/Tom-cooper-data.xml";
+        myText = (TextAsset)AssetDatabase.LoadAssetAtPath(path, typeof(TextAsset));
+
         //Assigning Xdocument xmlDoc. Loads the xml file from the file path listed. 
-        xmlDoc = XDocument.Load("Assets/Data/Tom-cooper-data.xml");
+        xmlDoc = XDocument.Parse(myText.text);
 
         //This basically breaks down the XML Document into XML Elements. Used later. 
         chapters = xmlDoc.Descendants("chapter");
