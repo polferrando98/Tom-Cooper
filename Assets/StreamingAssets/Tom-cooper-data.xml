@@ -12,151 +12,273 @@
 
   <interaction tag="first_text" type="paragraph">
     <text>
-      Tom Cooper, a frustrated travel writer with a bad drinking habit, is on a flight to Moscow to meet an old friend from university. He had failed in love – his wife divorced him – and he had failed as a writer – he was never able to replicate the success of his first and only book – so he had decided to give up everything and hit the road in search of inspiration, and crossing Russia by motorbike sounded like a good plan at the moment.
+      Tom Cooper, a frustrated travel writer with a bad drinking habit, is waiting for a flight to
+Moscow to meet an old friend from university. He has failed in love – his wife divorced him –
+and he has failed as a writer – he was never able to replicate the success of his first and only
+book – so he has decided to give up everything and hit the road in search of inspiration, and
+crossing Russia by motorbike sounded like a good plan at the moment.
     </text>
     <next>
-      plane_1
+      bar_pic
     </next>
     <pic>
       plane_inside_1
     </pic>
   </interaction>
 
-  <interaction tag="plane_1" type="paragraph">
-    <text>
-      Ugh… that was a rough flight…
-    </text>
+  <interaction tag="bar_pic" type="fullscreen_pic">
     <pic>
       plane_window
     </pic>
     <next>
-      plane_2
+      man_in_bar_pic
     </next>
   </interaction>
 
-  <interaction tag="plane_2" type="fullscreen_pic">
+    <interaction tag="man_in_bar_pic" type="paragraph">
     <pic>
-      finger_on_button
+      plane_window
     </pic>
+    <text>
+      [speaking Ukranian] Damn Russians!
+    </text>
     <next>
-      plane_3
+      tom_looks_man_1
     </next>
   </interaction>
 
-  <interaction tag="plane_3" type="fullscreen_pic">
+  <interaction tag="tom_looks_man_1" type="paragraph">
     <pic>
       attendant
     </pic>
+    <text>
+      Everything OK?
+    </text>
     <next>
-      attendant_question
+      man_looks_newspaper
     </next>
   </interaction>
 
-  <interaction tag="attendant_question" type="question">
+  
+  <interaction tag="man_looks_newspaper" type="paragraph">
+    <pic>
+      attendant
+    </pic>
+    <text>
+      The Russians.
+    </text>
+    <next>
+      tom_looks_man_looking_him
+    </next>
+  </interaction>
+
+    <interaction tag="tom_looks_man_looking_him" type="paragraph">
+    <pic>
+      attendant
+    </pic>
+    <text>
+      The Russians?
+    </text>
+    <next>
+      man_gesticulating_1
+    </next>
+  </interaction>
+
+    <interaction tag="man_gesticulating_1" type="fullscreen_pic">
+    <pic>
+      plane_window
+    </pic>
+    <next>
+      man_gesticulating_2
+    </next>
+  </interaction>
+
+      <interaction tag="man_gesticulating_2" type="paragraph">
+    <pic>
+      attendant
+    </pic>
+    <text>
+      Yes, the Russians! They invade Ukraine, they invade my country because they don’t want
+Ukraine friends with Europe, now they say they didn’t, they say it’s Ukraninan rebels. Now
+Ukranian rebels shot down plane. How can rebels shoot down a plane!? With Kalashnikov? Ha!
+This big weapons, this Russian missile. Don’t say they not Russian…
+    </text>
+    <next>
+      tom_looks_drink_1
+    </next>
+  </interaction>
+
+    <interaction tag="tom_looks_drink_1" type="paragraph">
+    <pic>
+      attendant
+    </pic>
+    <text>
+    – Yeah, it’s bad there. I have a friend in Luhansk.
+    </text>
+    <next>
+      man_looks_tom_surprised
+    </next>
+  </interaction>
+
+      <interaction tag="man_looks_tom_surprised" type="paragraph">
+    <pic>
+      attendant
+    </pic>
+    <text>
+    You know Luhansk?
+    </text>
+    <next>
+      tom_explains_he_traveled_luhansk
+    </next>
+  </interaction>
+
+    <interaction tag="tom_explains_he_traveled_luhansk" type="paragraph">
+    <pic>
+      attendant
+    </pic>
+    <text>
+    Yes, I travelled there by bike when the USSR disintegrated, visited all the former
+republics in the west and wrote a book about it. I met lots of people.
+    </text>
+    <next>
+      tom_looks_drink_2
+    </next>
+  </interaction>
+
+    <interaction tag="tom_looks_drink_2" type="paragraph">
+    <pic>
+      attendant
+    </pic>
+    <text>
+    Your friend OK?
+    </text>
+    <next>
+      tom_looks_man_2
+    </next>
+  </interaction>
+
+    <interaction tag="tom_looks_man_2" type="paragraph">
+    <pic>
+      attendant
+    </pic>
+    <text>
+I don’t know. He could have moved to the capital when the conflict started, but he didn’t
+want to leave his flat, he was afraid of looters. I haven’t heard from him in a while.
+    </text>
+    <next>
+      man_invites_tom
+    </next>
+  </interaction>
+
+
+  <interaction tag="man_invites_tom" type="question">
     <pic>
       attendant
     </pic>
     <question>
       <question_text>
-        Can I help you sir?
+        Let me buy drink
       </question_text>
-      <answer next="ask_time">Ask time</answer>
-      <answer next="ask_bourbon">Ask for more bourbon</answer>
+      <answer next="tom_refuses_1">Refuse drink</answer>
+      <answer next="tom_accepts_1">Accept drink</answer>
     </question>
   </interaction>
 
-  <interaction tag="ask_time" type="paragraph">
-    <text>
-      Could you tell me what time it is here, please?
-    </text>
+
+    <interaction tag="tom_refuses_1" type="paragraph">
     <pic>
-      clock
+      attendant
     </pic>
+    <text>
+No thanks, I’ve already had enough and
+my plane is leaving soon. It’s been nice
+talking to you.
+    </text>
     <next>
-      ask_time_2
+      tom_refuses_2
     </next>
   </interaction>
 
-  <interaction tag="ask_time_2" type="paragraph">
-    <text>
-      It’s 11:15, we are three hours ahead of London, sir.
-    </text>
+      <interaction tag="tom_refuses_2" type="paragraph">
     <pic>
       attendant
     </pic>
-    <next>
-      attendant_question
-    </next>
-  </interaction>
-
-  <interaction tag="ask_bourbon" type="paragraph">
     <text>
-      Can I have another bourbon, please?’
+My pleasure. Hope your friend is OK.
     </text>
-    <pic>
-      bourbon
-    </pic>
-    <next>
-      ask_bourbon_2
-    </next>
-  </interaction>
-  
-  <interaction tag="ask_bourbon_2" type="question">
-    <pic>
-      attendant
-    </pic>
-    <question>
-      <question_text>
-        Sorry sir, we are about to land, we cannot serve any more drinks.
-      </question_text>
-      <answer next="insist">Insist</answer>
-      <answer next="desist">Desist</answer>
-    </question>
-  </interaction>
-  
-  <interaction tag="insist" type="paragraph">
-    <text>
-      Come on now, be a nice girl, it’s been a horrible flight and I’m a nervous flier.
-    </text>
-    <pic>
-      bourbon
-    </pic>
-    <next>
-      insist_2
-    </next>
-  </interaction>
-  
-  <interaction tag="insist_2" type="paragraph">
-    <text>
-      All right, but it really must be the last one.’
-    </text>
-    <pic>
-      attendant
-    </pic>
-    <next>
-      insist_3
-    </next>
-  </interaction>
-  
-  <interaction tag="insist_3" type="paragraph">
-    <text>
-      ‘Make it double, would you?
-    </text>
-    <pic>
-      bourbon
-    </pic>
     <next>
       intro_pic_plane
     </next>
   </interaction>
-  
-  <interaction tag="desist" type="paragraph">
-    <text>
-       Well, that’s a bummer.
-    </text>
+
+    <interaction tag="tom_accepts_1" type="paragraph">
     <pic>
-      plane_window
+      attendant
     </pic>
+    <text>
+Thanks man.
+    </text>
+    <next>
+      tom_accepts_2
+    </next>
+  </interaction>
+
+      <interaction tag="tom_accepts_2" type="fullscreen_pic">
+    <pic>
+      attendant
+    </pic>
+    <next>
+      waiter_appears
+    </next>
+  </interaction>
+
+      <interaction tag="waiter_appears" type="paragraph">
+    <pic>
+      attendant
+    </pic>
+    <text>
+Yes sir?
+    </text>
+    <next>
+      tom_asks_double_bourbon
+    </next>
+  </interaction>
+
+        <interaction tag="tom_asks_double_bourbon" type="paragraph">
+    <pic>
+      attendant
+    </pic>
+    <text>
+Can I have another double bourbon,
+please?
+    </text>
+    <next>
+      pa_speakers
+    </next>
+  </interaction>
+
+          <interaction tag="pa_speakers" type="paragraph">
+    <pic>
+      attendant
+    </pic>
+    <text>
+Ladies and Gentlemen, we regret
+to inform you that flight BA815 to Moscow
+has been delayed due to a technical issue.
+    </text>
+    <next>
+      tom_new_drink
+    </next>
+  </interaction>
+
+            <interaction tag="tom_new_drink" type="paragraph">
+    <pic>
+      attendant
+    </pic>
+    <text>
+Well, I think we’re going to have time
+for a few rounds.
+    </text>
     <next>
       intro_pic_plane
     </next>
