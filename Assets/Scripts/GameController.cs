@@ -24,9 +24,11 @@ public class GameController : MonoBehaviour
     public Button opt2;
     public Image question_image;
 
+    public Sprite current_pic;
+
     DataController data;
     List<Chapter> chapter_list = new List<Chapter>();
-    Interaction current_interaction;
+    public Interaction current_interaction;
 
 
 
@@ -60,11 +62,13 @@ public class GameController : MonoBehaviour
 
         hideAllPanels();
 
+        current_pic = GetSpriteFromFileName(current_interaction.pic);
+
         switch (current_interaction.type)
         {
             case Interaction.InteractionType.FullscreenPicture:
                 FullscreenPicPanel.SetActive(true);
-                fullscreen_image.overrideSprite = GetSpriteFromFileName(current_interaction.pic);
+                fullscreen_image.overrideSprite = current_pic;
                 break;
             case Interaction.InteractionType.Paragraph:
                 ParagraphPanel.SetActive(true);
@@ -72,7 +76,7 @@ public class GameController : MonoBehaviour
 
 
                 //paragraph_image.overrideSprite = Resources.Load<Sprite>(current_interaction.pic);
-                paragraph_image.overrideSprite = GetSpriteFromFileName(current_interaction.pic);
+                paragraph_image.overrideSprite = current_pic;
 
                 break;
             case Interaction.InteractionType.Question:
@@ -81,13 +85,14 @@ public class GameController : MonoBehaviour
                 opt1.GetComponentInChildren<Text>().text = current_interaction.question.answers[0].text;
                 opt2.GetComponentInChildren<Text>().text = current_interaction.question.answers[1].text;
 
-                question_image.overrideSprite = GetSpriteFromFileName(current_interaction.pic);
+                question_image.overrideSprite = current_pic;
 
                 //Calls the Opt1OnClick method when you click the Button
                 opt1.onClick.AddListener(OnOpt1Click);
                 opt2.onClick.AddListener(OnOpt2Click);
                 break;
         }
+
     }
 
     public void changeInteraction()
